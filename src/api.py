@@ -10,10 +10,9 @@ class Kid:
         self.id = id
 
 class Stunde:
-    def __init__(self, fach,raum, lehrerKuerzel):
+    def __init__(self, fach,raum):
         self.fach = fach
         self.raum = raum
-        self.lehrerKuerzel = lehrerKuerzel
 
 class SchoolInfo:
     def __init__(self, key, value):
@@ -139,7 +138,7 @@ class ElternPortalApiClient:
         cells = soup.select("#asam_content > div > table > tr td")
         std = 0
         tag =0
-        tage= [[Stunde("",0,"") for x in range(3)] for y in range(5)] 
+        tage= [[Stunde("","") for x in range(3)] for y in range(5)] 
         for cell in cells[6:]:
             cell_html = cell.decode_contents()
             arr1 = cell_html.split('<br>')
@@ -149,9 +148,9 @@ class ElternPortalApiClient:
                     fach = arr1[0].split('>')[1]
                     raum = arr1[1].split('<')[0]
                     if std < 4:
-                        tage[tag-1][std-1]=(Stunde(fach=fach,raum=raum,lehrerKuerzel=''))
+                        tage[tag-1][std-1]=(Stunde(fach=fach,raum=raum))
                     elif fach!="":
-                        tage[tag-1].append(Stunde(fach=fach,raum=raum,lehrerKuerzel=''))
+                        tage[tag-1].append(Stunde(fach=fach,raum=raum))
                 else:
                     std+=1
                     tag =0
